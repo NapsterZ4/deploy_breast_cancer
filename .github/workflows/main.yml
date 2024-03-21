@@ -27,10 +27,7 @@ jobs:
 
     - name: Deploy to AWS EC2
       uses: appleboy/ssh-action@master
-      with:
-        host: 54.175.118.25
-        username: ec2-user
-        key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCTQonlynqxJYjDR1FF4Jf8S1suHWwbnk2u1RYu/rGeQQl5K+TZRyld9dVYLvVxEW2tlBRof+mglk7K8eroyNU99kPFh6uFpeS+9ymr55WXexk3tdPQhSPYonrdiwo4CnrRBPL6klsXNGbNvNUIf0KD+wgkRU+iKkjB04oQnXVyQ9zwdZqfD80NJGUjSZGKcG18FNfttOLEunIYJJGDWmtaUcIvIxWEv3C+QUMT8nKAsA4iLu10gIYLMFm7UoDh3Cem7IWwXu0rnk7aKKG+sFFBqQ/YLqTsVga4w1QAOVcqhQdIAhD04wBw0jKrR08Qx9y6wrL/AaJiLQpkdjA6hP3H key_pair_napster
-        script: |
+      run: |
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ec2-user@ec2-54-175-118-25.compute-1.amazonaws.com|
           docker pull napsterz4/mlops-class:deploy-breast-cancer-dev
           docker run -d -p 8000:8000 napsterz4/mlops-class:deploy-breast-cancer-dev
