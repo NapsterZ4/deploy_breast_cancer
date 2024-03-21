@@ -1,0 +1,32 @@
+name: Deploy to AWS
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: docker build -t napsterz4/mlops-class:deploy-breast-cancer-dev .
+
+    - name: Push Docker image to Docker Hub
+      run: docker push napsterz4/mlops-class:deploy-breast-cancer-dev
+
+    - name: Deploy to AWS EC2
+      run: |
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ec2-user@ec2-54-175-118-25.compute-1.amazonaws.com|
+          docker pull napsterz4/mlops-class:deploy-breast-cancer-dev
+          docker run -d -p 8000:8000 napsterz4/mlops-class:deploy-breast-cancer-dev
