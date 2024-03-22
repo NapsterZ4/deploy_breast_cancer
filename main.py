@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status, HTTPException
 from fastapi.responses import JSONResponse
 import pandas as pd
-# import joblib
+import joblib
 
 app = FastAPI(
     title="Deploy breast cancer model",
@@ -11,7 +11,7 @@ app = FastAPI(
 # ------------------------------------------------------------
 # LOAD THE AI MODEL
 # ------------------------------------------------------------
-# model = joblib.load("model/logistic_regression_model_v01.pkl")
+model = joblib.load("model/logistic_regression_model_v01.pkl")
 
 
 @app.post("/api/v1/predict-breast-cancer", tags=["breast-cancer"])
@@ -82,7 +82,7 @@ async def predict(
 
     try:
         df = pd.DataFrame(dictionary, index=[0])
-        # prediction = model.predict(df)
+        prediction = model.predict(df)
         return JSONResponse(
             status_code=status.HTTP_200_OK,
             content="B"
