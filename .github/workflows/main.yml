@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             docker login
-            if docker ps | grep -q breast-cancer; then
+            if docker ps --all | grep -q breast-cancer; then
               docker stop breast-cancer
               docker rm breast-cancer
             fi
