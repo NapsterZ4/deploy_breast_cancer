@@ -34,7 +34,9 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            docker stop breast-cancer || true
-            docker rm breast-cancer || true
+            if docker ps | grep -q breast-cancer; then
+              docker stop breast-cancer
+              docker rm breast-cancer
+            fi
             docker pull ${{ secrets.DOCKER_USERNAME }}/deploy-breast-cancer:v1
             docker run -d --name breast-cancer -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/deploy-breast-cancer:v1
