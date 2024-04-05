@@ -4,8 +4,8 @@ import pandas as pd
 import joblib
 
 app = FastAPI(
-    title="Deploy breast cancer model",
-    version="0.0.1"
+    title="Deploy breast cancer model - best model",
+    version="0.0.2"
 )
 
 # ------------------------------------------------------------
