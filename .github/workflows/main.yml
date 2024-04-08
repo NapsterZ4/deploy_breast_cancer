@@ -14,6 +14,10 @@ jobs:
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Upgrade pip
+        run: pip install --upgrade pip
+
       - name: Install requirements
         run:
           pip install -r requirements.txt
