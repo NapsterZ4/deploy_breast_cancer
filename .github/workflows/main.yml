@@ -14,9 +14,12 @@ jobs:
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install requirements and execute the model
-        run: |
+      - name: Install requirements
+        run:
           pip install -r requirements.txt
+
+      - name: Execute the training model
+        run: |
           python retraining.py
 
       - name: Generating report
