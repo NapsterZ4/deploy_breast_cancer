@@ -55,7 +55,8 @@ plt.figure(figsize=(10, 6))
 plt.barh(feature_names, coefficients, color='skyblue')
 plt.xlabel('Coeficiente')
 plt.title('Importancia de las características en el modelo de regresión logística')
-plt.show()
+plt.savefig("feature_importance.png", dpi=120)
+plt.close()
 
 # --------------------------------------------
 # METRICS
@@ -63,8 +64,11 @@ plt.show()
 y_pred = best_model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
+with open("metrics.txt", 'w') as outfile:
+    outfile.write("Training accuracy: %2.1f%%\n" % accuracy)
+
 # --------------------------------------------
 # SERIALIZING
 # --------------------------------------------
-model_filename = 'models/reg_log_model.pkl'
+model_filename = 'model/logistic_regression_model.pkl'
 joblib.dump(best_model, model_filename)

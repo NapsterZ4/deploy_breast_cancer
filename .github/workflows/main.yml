@@ -1,6 +1,5 @@
 name: CI model to dockerhub
 
-# Trigger
 on:
   push:
     branches:
@@ -9,8 +8,28 @@ on:
     branches:
       - dev
 
-# Acciones
 jobs:
+  retraining_model:
+    runs-on: ubuntu-latest
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install requirements and execute the model
+        run: |
+          pip install -r requirements.txt
+          python retraining.py
+
+      - name: Generating report
+        run: |
+          echo "## Model metrics" > report.md
+          cat metrics.txt >> report.md
+          
+          echo "## Data viz" >> report.md
+          cml-publish feature_importance.png --md >> report.md
+          cml-publish residuals.png --md >> report.md
+          
+          cml-send-comment report.md
+
   build_docker_image:
     runs-on: ubuntu-latest
 

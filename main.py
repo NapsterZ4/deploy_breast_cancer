@@ -11,7 +11,7 @@ app = FastAPI(
 # ------------------------------------------------------------
 # LOAD THE AI MODEL
 # ------------------------------------------------------------
-model = joblib.load("model/logistic_regression_model_v01.pkl")
+model = joblib.load("model/logistic_regression_model.pkl")
 
 
 @app.post("/api/v1/predict-breast-cancer", tags=["breast-cancer"])
