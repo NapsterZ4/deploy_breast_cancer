@@ -1,4 +1,13 @@
 import boto3
+import os
+
+
+def create_data_folder():
+    try:
+        os.makedirs('data', exist_ok=True)
+        print("Carpeta 'data' creada exitosamente.")
+    except Exception as e:
+        print(f"Error al crear la carpeta 'data': {e}")
 
 
 def download_data_from_s3(bucket_name, remote_path, local_path):
@@ -15,4 +24,5 @@ if __name__ == "__main__":
     remote_path = 'data_scientific/data.csv'
     local_path = 'data/data.csv'
 
+    create_data_folder()
     download_data_from_s3(bucket_name, remote_path, local_path)
