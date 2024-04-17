@@ -37,9 +37,6 @@ jobs:
       - name: Version the new data
         run: dvc add data/
 
-      - name: Add the remote repo
-        run: dvc remote add -d versioning s3://mlops-testing-course/data/
-
       - name: Push trained model to DVC
         run: dvc push model.pkl.dvc
         env:
