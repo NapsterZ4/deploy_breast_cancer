@@ -38,7 +38,7 @@ jobs:
         run: dvc add data/
 
       - name: Push trained model to DVC
-        run: dvc push model.pkl.dvc
+        run: dvc push data.dvc
         env:
           DVC_REMOTE: versioning
 
