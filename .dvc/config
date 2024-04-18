@@ -1,4 +1,0 @@
-[core]
-    remote = versioning
-['remote "versioning"']
-    url = s3://mlops-testing-course/data/
